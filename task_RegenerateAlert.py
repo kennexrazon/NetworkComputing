@@ -11,7 +11,7 @@ from datetime import timedelta as tda
 from datetime import datetime as dt
 import alertgenDELAYED as ad
 import sys
-
+#
 #def get_cols():
 #    query = "select name from senslopedb.site_column_props "
 #    query2 = """where name like '____%' """
@@ -21,7 +21,7 @@ import sys
 #def write_initial_task(col_name):
 #    timestamp = pd.to_datetime('2016-10-01 00:00:00')
 #    query = """
-#    insert into senslopedb.to_run_scripts(script_name,script_add,stat) values ('task_RegenerateAlert.py %s %s',"",'WAITING')
+#    insert into senslopedb.to_run_scripts(script_name,stat) values ('task_RegenerateAlert.py %s %s','WAITING')
 #    """ %(col_name,str(timestamp))
 #    db,cur = qdb.SenslopeDBConnect('senslopedb')
 #    cur.execute(query)
@@ -46,11 +46,15 @@ def write_next_task(col_name,timestamp):
     
 def main():  
     name = sys.argv[1]
-    custom_end = pd.to_datetime(sys.argv[2])
+    date = str(sys.argv[2])
+    time = str(sys.argv[3])
+    custom_end = pd.to_datetime(date + ' ' + time)
     name = str(name)
+
     try:
         ad.main(name,custom_end)
         next_timestamp = custom_end + tda(minutes=30)
+#        print '\\\\\\\\\\\\\\\\\\\\%s//////////////////////////' %str(next_timestamp)
         if next_timestamp < dt.now():
             write_next_task(name,next_timestamp)
             return 1

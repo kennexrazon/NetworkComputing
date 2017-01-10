@@ -19,13 +19,13 @@ cur = db.cursor()
 
 def get_waiting_task():
     query = """
-    select script_name,script_add,task_id from senslopedb.to_run_scripts where stat = 'WAITING' limit 1
+    select script_name,task_id from senslopedb.to_run_scripts where stat = 'WAITING' limit 1
     """    
     cur.execute(query)
     entry = cur.fetchall()
     if len(entry) > 0:
         script = entry[0][0]
-        address = entry[0][1]
+#        address = entry[0][1]
         task_id = int(entry[0][2])
         update_stat_running(task_id)
         return script,address,task_id
@@ -39,12 +39,12 @@ def get_waiting_task():
 
 def re_run_task(task_id):
     query = """
-    select script_name,script_add,task_id from senslopedb.to_run_scripts where task_id = %d limit 1
+    select script_name,task_id from senslopedb.to_run_scripts where task_id = %d limit 1
     """ % int(task_id)
     cur.execute(query)
     entry = cur.fetchall()
     script = entry[0][0]
-    address = entry[0][1]
+#    address = entry[0][1]
     task_id = int(entry[0][2])
     update_stat_running(task_id)
     return script,address,task_id
