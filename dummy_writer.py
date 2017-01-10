@@ -20,7 +20,7 @@ def main():
     db = mysqlDriver.connect(host = Hostdb, user = Userdb, passwd = Passdb, db=nameDB)
     cur = db.cursor()
     time_now = time.strftime("%Y-%m-%d %H:%M:%S")
-    time.sleep(30)
+    time.sleep(60)
     time_finished = time.strftime("%Y-%m-%d %H:%M:%S")
     query = """ 
     insert into senslopedb.dummy_table (output,time_start,time_end) values (%s,'%s','%s')
