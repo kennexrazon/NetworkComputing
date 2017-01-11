@@ -34,7 +34,6 @@ def main():
         ad.main(name,custom_end)
         next_timestamp = custom_end + tda(minutes=30)
         if next_timestamp < dt.now():
-            print 'will write next task now'
             write_next_task(name,next_timestamp)
             return 1
         else:

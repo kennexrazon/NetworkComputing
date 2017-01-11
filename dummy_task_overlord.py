@@ -27,7 +27,7 @@ def get_waiting_task():
         script = entry[0][0]
         task_id = int(entry[0][1])
         update_stat_running(task_id)
-        return script,address,task_id
+        return script,task_id
     else:
         print 'No more tasks to do. Quit na.'
         return 0
@@ -41,7 +41,7 @@ def re_run_task(task_id):
     script = entry[0][0]
     task_id = int(entry[0][1])
     update_stat_running(task_id)
-    return script,address,task_id
+    return script,task_id
     
 def update_stat_running(task_id):
     name = os.environ['COMPUTERNAME']
@@ -73,8 +73,8 @@ def update_stat_error(task_id,desc):
     return 1
     
 
-def execute(script,address,task_id):
-    cmd = '''python %s %s''' %(address,script)    
+def execute(script,task_id):
+    cmd = '''python %s''' %(script)    
     try:
         if os.system(cmd) == 0:
             update_stat_finished(task_id)
@@ -88,11 +88,11 @@ def execute(script,address,task_id):
 
 def main():
     while 1:
-        script,address,task_id = get_waiting_task()
-        run = execute(script,address,task_id)
+        script,task_id = get_waiting_task()
+        run = execute(script,task_id)
         if run != 1:
-            script,address,task_id = re_run_task()
-            run = execute(script,address,task_id)
+            script,task_id = re_run_task()
+            run = execute(script,task_id)
 
 if __name__ == '__main__':
     main()
