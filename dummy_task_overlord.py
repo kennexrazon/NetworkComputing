@@ -26,7 +26,7 @@ def get_waiting_task():
     if len(entry) > 0:
         script = entry[0][0]
 #        address = entry[0][1]
-        task_id = int(entry[0][2])
+        task_id = int(entry[0][1])
         update_stat_running(task_id)
         return script,address,task_id
     else:
@@ -45,7 +45,7 @@ def re_run_task(task_id):
     entry = cur.fetchall()
     script = entry[0][0]
 #    address = entry[0][1]
-    task_id = int(entry[0][2])
+    task_id = int(entry[0][1])
     update_stat_running(task_id)
     return script,address,task_id
     
