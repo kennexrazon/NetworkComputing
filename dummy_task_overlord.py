@@ -8,7 +8,7 @@ This scripts gets tasks on queue from the table 'to_run_scripts'.
 import MySQLdb as mysqlDriver
 import os
 import time
-import sys
+#import sys
 
 Hostdb = '127.0.0.1'
 Userdb = 'root'
@@ -25,17 +25,12 @@ def get_waiting_task():
     entry = cur.fetchall()
     if len(entry) > 0:
         script = entry[0][0]
-#        address = entry[0][1]
         task_id = int(entry[0][1])
         update_stat_running(task_id)
         return script,address,task_id
     else:
         print 'No more tasks to do. Quit na.'
         return 0
-#        db.close()
-#        exit()
-#        time.sleep(5)
-#        os.system('''python dummy_task_overlord.py''')
 
 def re_run_task(task_id):
     query = """
@@ -44,7 +39,6 @@ def re_run_task(task_id):
     cur.execute(query)
     entry = cur.fetchall()
     script = entry[0][0]
-#    address = entry[0][1]
     task_id = int(entry[0][1])
     update_stat_running(task_id)
     return script,address,task_id
@@ -80,11 +74,6 @@ def update_stat_error(task_id,desc):
     
 
 def execute(script,address,task_id):
-#def execute(task_id=''):
-#    if task_id == '':
-#        script,address,task_id = get_waiting_task()
-#    else:
-#        script,address,task_id = re_run_task(int(task_id))
     cmd = '''python %s %s''' %(address,script)    
     try:
         if os.system(cmd) == 0:
@@ -96,12 +85,14 @@ def execute(script,address,task_id):
     except:
         update_stat_error(task_id,'update_stat_error')
         return task_id
-    
-    
-if __name__ == '__main__':
+
+def main():
     while 1:
         script,address,task_id = get_waiting_task()
         run = execute(script,address,task_id)
         if run != 1:
             script,address,task_id = re_run_task()
             run = execute(script,address,task_id)
+
+if __name__ == '__main__':
+
