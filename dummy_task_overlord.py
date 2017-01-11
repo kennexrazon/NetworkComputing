@@ -95,4 +95,4 @@ def main():
             run = execute(script,address,task_id)
 
 if __name__ == '__main__':
-
+    main()
