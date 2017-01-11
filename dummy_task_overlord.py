@@ -8,7 +8,8 @@ This scripts gets tasks on queue from the table 'to_run_scripts'.
 import MySQLdb as mysqlDriver
 import os
 import time
-#import sys
+import dummy_config
+#import querySenslopeDb.py as qdb
 
 Hostdb = '127.0.0.1'
 Userdb = 'root'
