@@ -11,12 +11,12 @@ import time
 import dummy_config
 #import querySenslopeDb.py as qdb
 
-Hostdb = '127.0.0.1'
-Userdb = 'root'
-Passdb = 'senslope'
-nameDB = 'senslopedb'
-db = mysqlDriver.connect(host = Hostdb, user = Userdb, passwd = Passdb, db=nameDB)
-cur = db.cursor()
+#Hostdb = '127.0.0.1'
+#Userdb = 'root'
+#Passdb = 'senslope'
+#nameDB = 'senslopedb'
+#db = mysqlDriver.connect(host = Hostdb, user = Userdb, passwd = Passdb, db=nameDB)
+#cur = db.cursor()
 
 def get_waiting_task():
     query = """
