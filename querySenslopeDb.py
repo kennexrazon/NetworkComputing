@@ -655,9 +655,11 @@ def GetLastGoodData(df, nos, fillMissing=False):
         # change their ids to the missing ids
         dfd.id = pd.Series(missing)
         # append to the lgd datframe
-        dflgd = dfa.append(dfd).sort(['id']).reset_index(level=1,drop=True)
+#        dflgd = dfa.append(dfd).sort(['id']).reset_index(level=1,drop=True)###########updated by khr
+        dflgd = dfa.append(dfd).sort_values(['id']).reset_index(level=1,drop=True)
     else:
-        dflgd = dfa.sort(['id']).reset_index(level=1,drop=True)
+#        dflgd = dfa.sort(['id']).reset_index(level=1,drop=True) ###########updated by khr
+        dflgd = dfa.sort_values(['id']).reset_index(level=1,drop=True)
         
 #    print dflgd
     
