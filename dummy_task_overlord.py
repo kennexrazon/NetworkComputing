@@ -57,9 +57,9 @@ def update_stat_running(task_id):
     """ %(name,str(time_now),task_id)
     if dc.cur.execute(query):
         dc.db.commit()
-        return 1 # assume masususlat
+        return 1 # assume nasususlat
     else:
-        print 'ERROR in updating to_run_scripts.'
+        update_stat_error(task_id,'writing_stat_running')
         return 0
     
 def update_stat_finished(task_id):
@@ -67,8 +67,12 @@ def update_stat_finished(task_id):
     query = """
     update senslopedb.to_run_scripts set stat = 'FINISHED', time_finished = '%s' where task_id = %d
     """ %(str(time_now),task_id)
-    dc.cur.execute(query)
-    dc.db.commit()
+    if dc.cur.execute(query):
+        dc.db.commit()
+        return 1 # assume nasususlat
+    else:
+        update_stat_error(task_id,'writing_stat_finished')
+        return 0
     return 1
 
 def update_stat_error(task_id,desc):
