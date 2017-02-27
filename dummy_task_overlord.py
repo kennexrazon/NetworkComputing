@@ -103,18 +103,14 @@ def execute(script,task_id):
 
 def main():
     log = open('runlog.txt','w')
-    for i in range (0,106):
+    while 1:
         script,task_id = get_waiting_task()
         try:
-            run = execute(script,task_id)
+            execute(script,task_id)
         except Exception as e:
             log.write('Failed execute: {}\n'.format(str(e)))
-            
         finally:
             pass
-#            if run != 1:
-#            script,task_id = re_run_task()
-#            run = execute(script,task_id)
 
 
 
