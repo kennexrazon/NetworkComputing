@@ -173,7 +173,7 @@ def resample_df(df):
     df = df.reset_index()
     return df
     
-def applyFilters(dfl, orthof=True, rangef=True, outlierf=True):
+def applyFilters(dfl, orthof=False, rangef=False, outlierf=False):
 
     if dfl.empty:
         return dfl[['ts','name','id','x','y','z']]
