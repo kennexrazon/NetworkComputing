@@ -299,16 +299,13 @@ def write_site_alert(site, window):
 def main(name='',custom_end = ''):
     if name == '':
         name = sys.argv[1].lower()
-    
+
     start = datetime.now()
-#    print start
-#    custom_end = (datetime.now() -timedelta(days = 4,hours= 2))
-    print "=========================== %s %s=========================" %(str(name), custom_end)
-    window,config = rtw.getwindow(end = custom_end ) 
+
+    print "=========================== {} {} =========================".format(str(name), custom_end)
+    window,config = rtw.getwindow(end = custom_end )
     col = q.GetSensorList(name)
     monitoring = g.genproc(col[0], window, config, config.io.column_fix)
-#    print monitoring.disp
-#    print monitoring.vel
     lgd = q.GetLastGoodDataFromDb(monitoring.colprops.name)
     
     
@@ -316,7 +313,6 @@ def main(name='',custom_end = ''):
     monitoring_vel = monitoring_vel.reset_index().sort_values('ts',ascending=True)
     nodal_dv = monitoring_vel.groupby('id')     
     
-#    print nodal_dv.get_group(10)
     alert = nodal_dv.apply(node_alert2, colname=monitoring.colprops.name, num_nodes=monitoring.colprops.nos, T_disp=config.io.t_disp, T_velL2=config.io.t_vell2, T_velL3=config.io.t_vell3, k_ac_ax=config.io.k_ac_ax, lastgooddata=lgd,window=window,config=config)
     alert = column_alert(alert, config.io.num_nodes_to_check, config.io.k_ac_ax)
     

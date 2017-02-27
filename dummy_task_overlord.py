@@ -9,6 +9,7 @@ import MySQLdb as mysqlDriver
 import os
 import time
 import dummy_config as dc
+from sqlalchemy import exc
 #import querySenslopeDb.py as qdb
 
 #Hostdb = '127.0.0.1'
@@ -88,28 +89,35 @@ def update_stat_error(task_id,desc):
 
 def execute(script,task_id):
     cmd = '''python %s''' %(script)    
-    try:
-        if os.system(cmd) == 0:
-#            print 'os.system(cmd) == 0:'
-            update_stat_finished(task_id)
-#            print 'update_stat_finished(task_id)'
-            return 1
-        else:
-            print 'else'
-            update_stat_error(task_id,'cmd')
-            print '''update_stat_error(task_id,'cmd')'''
-            return task_id
-    except:
-        update_stat_error(task_id,'update_stat_error')
+#    try:
+    if os.system(cmd) == 0:
+        update_stat_finished(task_id)
+        return 1
+    else:
+        update_stat_error(task_id,'cmd')
+        print '''update_stat_error(task_id,'cmd')'''
         return task_id
+#    except:
+#        update_stat_error(task_id,'update_stat_error')
+#        return task_id
 
 def main():
-    while 1:
+    log = open('runlog.txt','w')
+    for i in range (0,106):
         script,task_id = get_waiting_task()
-        run = execute(script,task_id)
-#        if run != 1:
+        try:
+            run = execute(script,task_id)
+        except Exception as e:
+            log.write('Failed execute: {}\n'.format(str(e)))
+            
+        finally:
+            pass
+#            if run != 1:
 #            script,task_id = re_run_task()
 #            run = execute(script,task_id)
+
+
+
 
 if __name__ == '__main__':
     main()

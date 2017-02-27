@@ -16,7 +16,7 @@ def get_cols():
     return qdb.GetDBDataFrame(query)
 
 def write_initial_task(col_name):
-    timestamp = pd.to_datetime('2016-10-01 00:00:00')
+    timestamp = pd.to_datetime('2017-01-01 00:30:00')
     query = """
     insert into senslopedb.to_run_scripts(script_name,stat) values ('task_RegenerateAlert.py %s %s','WAITING')
     """ %(col_name,str(timestamp))
